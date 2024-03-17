@@ -2,7 +2,6 @@ package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.model.Carro;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
-import br.com.masterclass.superpecas.model.DTO.PecaDTO;
 import br.com.masterclass.superpecas.model.DTO.TopTenDTO;
 import br.com.masterclass.superpecas.model.Peca;
 import br.com.masterclass.superpecas.repository.CarroRepository;

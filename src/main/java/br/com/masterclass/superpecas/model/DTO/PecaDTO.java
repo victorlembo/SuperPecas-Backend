@@ -1,9 +1,5 @@
 package br.com.masterclass.superpecas.model.DTO;
 
-import br.com.masterclass.superpecas.model.Carro;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

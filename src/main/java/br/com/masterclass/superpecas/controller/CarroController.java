@@ -7,6 +7,7 @@ import br.com.masterclass.superpecas.service.CarroService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,5 +63,20 @@ public class CarroController {
     @GetMapping("/listarTop10Fabricantes")
     public List<String> findTop10Fabricantes() {
         return carroService.findTop10Fabricantes();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createCarro(@RequestBody CarroDTO carroDTO) {
+        return carroService.save(carroDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateCarro(@RequestBody CarroDTO carroDTO) {
+        return carroService.save(carroDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCarro(@PathVariable Long id) {
+        return carroService.delete(id);
     }
 }

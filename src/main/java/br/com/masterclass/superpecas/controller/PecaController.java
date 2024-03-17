@@ -1,6 +1,5 @@
 package br.com.masterclass.superpecas.controller;
 
-import br.com.masterclass.superpecas.model.Carro;
 import br.com.masterclass.superpecas.model.DTO.PecaDTO;
 import br.com.masterclass.superpecas.model.Peca;
 import br.com.masterclass.superpecas.repository.PecaRepository;
@@ -8,6 +7,8 @@ import br.com.masterclass.superpecas.service.PecaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,10 +47,23 @@ public class PecaController {
 
     @GetMapping("/listarTodosPaginados/{termo}")
     public Page<PecaDTO> getAllPaged(@PathVariable String termo,
-                                      @RequestParam(defaultValue = "0", name = "page") int numPage) throws Exception {
+                                     @RequestParam(defaultValue = "0", name = "page") int numPage) throws Exception {
         return pecaService.findAllPagedByTerm(termo, numPage);
     }
 
+    @PostMapping
+    public ResponseEntity<?> createPeca(@RequestBody PecaDTO pecaDTO) {
+        return pecaService.save(pecaDTO);
+    }
 
+    @PutMapping
+    public ResponseEntity<?> updatePeca(@RequestBody PecaDTO pecaDTO) {
+        return pecaService.save(pecaDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePeca(@PathVariable Long id) {
+     return pecaService.delete(id);
+    }
 }
 

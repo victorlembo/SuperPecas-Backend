@@ -7,8 +7,11 @@ import lombok.Setter;
 @Setter
 public class CarroDTO {
     private Long carroID;
-    private String NomeModelo;
-    private String Fabricante;
-    private String CodigoUnico;
+
+    private String nomeModelo;
+
+    private String fabricante;
+
+    private String codigoUnico;
 
 }

@@ -7,10 +7,7 @@ import br.com.masterclass.superpecas.service.CarroService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,11 +38,29 @@ public class CarroController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/listarTodosPaginados/{numPage}")
-    public Page<CarroDTO> getAllPaged(@PathVariable int numPage) {
+    @GetMapping("/listarTodosPaginados")
+    public Page<CarroDTO> getAllPaged(@RequestParam(defaultValue = "0", name = "page") int numPage) {
         return carroService.findAllPaged(numPage);
     }
 
+    @GetMapping("/listarTodosPaginados/{termo}")
+    public Page<CarroDTO> getAllPaged(@PathVariable String termo,
+                                      @RequestParam(defaultValue = "0", name = "page") int numPage) throws Exception {
+        return carroService.findAllPagedByTerm(termo, numPage);
+    }
 
+    @GetMapping("/listarTodosFabricantes")
+    public List<String> getAllFabricantes() {
+        List<Carro> carros = carroRepository.findAll();
 
+        return carros.stream()
+                .map(carro -> carro.getFabricante())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/listarTop10Fabricantes")
+    public List<String> findTop10Fabricantes() {
+        return carroService.findTop10Fabricantes();
+    }
 }

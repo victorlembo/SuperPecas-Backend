@@ -15,7 +15,7 @@ public class OpenAPIConfig {
                 .info(new Info().title("SuperPecas API")
                         .description("API para o sistema Super Peças")
                         .version("1.0.0")
-                        .contact(new Contact().name("Nome do Contato").email("contato@superpecas.com"))
+                        .contact(new Contact().name("Victor Lembo").email("contato@superpecas.com"))
                         .license(new License().name("MIT").url("https://opensource.org/licenses/MIT")));
     }
 }

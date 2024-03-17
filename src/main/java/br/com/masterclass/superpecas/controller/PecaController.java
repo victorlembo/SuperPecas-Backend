@@ -1,17 +1,54 @@
 package br.com.masterclass.superpecas.controller;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import br.com.masterclass.superpecas.model.Carro;
+import br.com.masterclass.superpecas.model.DTO.PecaDTO;
+import br.com.masterclass.superpecas.model.Peca;
+import br.com.masterclass.superpecas.repository.PecaRepository;
+import br.com.masterclass.superpecas.service.PecaService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/peca")
 public class PecaController {
 
+    @Autowired
+    PecaRepository pecaRepository;
+    @Autowired
+    PecaService pecaService;
+    @Autowired
+    ModelMapper modelMapper;
 
+    @GetMapping("/{id}")
+    public PecaDTO getById(@PathVariable Long id) {
+        Optional<Peca> peca = pecaRepository.findById(id);
+        return modelMapper.map(peca, PecaDTO.class);
+    }
+
+    @GetMapping("/listarTodos")
+    public List<PecaDTO> getAll() {
+        List<Peca> pecas = pecaRepository.findAll();
+        return pecas.stream()
+                .map(peca -> modelMapper.map(peca, PecaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/listarTodosPaginados")
+    public Page<PecaDTO> getAllPaged(@RequestParam(defaultValue = "0", name = "page") int numPage) {
+        return pecaService.findAllPaged(numPage);
+    }
+
+    @GetMapping("/listarTodosPaginados/{termo}")
+    public Page<PecaDTO> getAllPaged(@PathVariable String termo,
+                                      @RequestParam(defaultValue = "0", name = "page") int numPage) throws Exception {
+        return pecaService.findAllPagedByTerm(termo, numPage);
+    }
 
 
 }

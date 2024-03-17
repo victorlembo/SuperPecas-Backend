@@ -25,9 +25,9 @@ public class CarroController {
     ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public Optional<Carro> getById(@PathVariable Long id) {
-        Optional<Carro> carroDTO = carroRepository.findById(id);
-        return carroDTO;
+    public CarroDTO getById(@PathVariable Long id) {
+        Optional<Carro> carro = carroRepository.findById(id);
+        return modelMapper.map(carro, CarroDTO.class);
     }
 
     @GetMapping("/listarTodos")

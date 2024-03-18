@@ -2,8 +2,8 @@ package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.model.Carro;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
-import br.com.masterclass.superpecas.model.DTO.TopTenDTO;
 import br.com.masterclass.superpecas.model.Peca;
+import br.com.masterclass.superpecas.model.Projection.CarroProjection;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import br.com.masterclass.superpecas.repository.PecaRepository;
 import org.apache.coyote.BadRequestException;
@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -110,24 +109,9 @@ public class CarroService {
         }
     }
 
-    public List<TopTenDTO> findTop10() {
+    public List<CarroProjection> findTop10() {
         Pageable pageable = PageRequest.of(0, 10);
-        List<Object[]> top10CarroIDs = carroRepository.findTop10(pageable);
-
-        List<TopTenDTO> topTenDTOS = new ArrayList<>();
-        for (Object[] obj : top10CarroIDs) {
-            Long carroID = (Long) obj[0];
-            Long count = (Long) obj[1];
-
-            Carro carro = carroRepository.findById(carroID).orElse(null);
-            if (carro != null) {
-                TopTenDTO topTenDTO = modelMapper.map(carro, TopTenDTO.class);
-                topTenDTO.setNumPecasAssociadas(count);
-                topTenDTOS.add(topTenDTO);
-            }
-        }
-
-        return topTenDTOS;
+        return carroRepository.findTop10(pageable);
     }
 
 }

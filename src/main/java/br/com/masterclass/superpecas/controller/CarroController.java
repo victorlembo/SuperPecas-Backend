@@ -2,7 +2,7 @@ package br.com.masterclass.superpecas.controller;
 
 import br.com.masterclass.superpecas.model.Carro;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
-import br.com.masterclass.superpecas.model.DTO.TopTenDTO;
+import br.com.masterclass.superpecas.model.Projection.CarroProjection;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import br.com.masterclass.superpecas.service.CarroService;
 import org.modelmapper.ModelMapper;
@@ -68,7 +68,7 @@ public class CarroController {
 
 
     @GetMapping("/listarTop10CarroComMaisPecas")
-    public List<TopTenDTO> getTop10() {
+    public List<CarroProjection> getTop10() {
         return carroService.findTop10();
     }
 

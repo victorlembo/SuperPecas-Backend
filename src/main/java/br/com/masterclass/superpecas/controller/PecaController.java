@@ -1,9 +1,16 @@
 package br.com.masterclass.superpecas.controller;
 
+import br.com.masterclass.superpecas.model.DTO.CarroDTO;
 import br.com.masterclass.superpecas.model.DTO.PecaDTO;
 import br.com.masterclass.superpecas.model.Peca;
 import br.com.masterclass.superpecas.repository.PecaRepository;
 import br.com.masterclass.superpecas.service.PecaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/peca")
+@RequestMapping("/api/peca")
 public class PecaController {
 
     @Autowired
@@ -60,6 +67,8 @@ public class PecaController {
         return pecaService.save(pecaDTO);
     }
 
+    @Operation(summary = "Excluir Peca", description = "Exclui uma peca do sistema")
+    @ApiResponses({@ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO.class))})})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePeca(@PathVariable Long id) {
      return pecaService.delete(id);

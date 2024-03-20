@@ -5,8 +5,14 @@ import br.com.masterclass.superpecas.model.DTO.CarroDTO;
 import br.com.masterclass.superpecas.model.Projection.CarroProjection;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import br.com.masterclass.superpecas.service.CarroService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/carro")
+@RequestMapping("/api/carro")
 public class CarroController {
 
     @Autowired
@@ -82,6 +88,8 @@ public class CarroController {
         return carroService.save(carroDTO);
     }
 
+    @Operation(summary = "Excluir Carro", description = "Exclui um carro do sistema")
+    @ApiResponses({@ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO.class))})})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCarro(@PathVariable Long id) {
         return carroService.delete(id);
